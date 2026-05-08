@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiHeart, FiMenu, FiSearch, FiShoppingBag, FiUser, FiX } from 'react-icons/fi';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
+import { useCart } from '../../context/CartContext.jsx';
 import { useStore } from '../../context/StoreContext.jsx';
 import NavIconButton from '../ui/NavIconButton.jsx';
 
@@ -17,11 +18,7 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { pathname, search } = useLocation();
   const { state } = useStore();
-
-  const cartCount = useMemo(
-    () => state.cart.reduce((total, item) => total + (item.quantity || 1), 0),
-    [state.cart],
-  );
+  const { itemCount } = useCart();
 
   const wishlistCount = state.wishlist.length;
   const profileLabel = state.user?.displayName || 'Login';
@@ -88,7 +85,7 @@ function Navbar() {
             label="Cart"
             icon={<FiShoppingBag size={19} />}
             to="/cart"
-            count={cartCount}
+            count={itemCount}
           />
           <Link
             to={state.user ? '/account' : '/login'}

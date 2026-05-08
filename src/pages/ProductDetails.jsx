@@ -14,6 +14,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import ProductCard from '../components/product/ProductCard.jsx';
+import { useCart } from '../context/CartContext.jsx';
 import { useStore } from '../context/StoreContext.jsx';
 import products from '../data/products.json';
 
@@ -45,6 +46,7 @@ function ProductDetails() {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { dispatch } = useStore();
+  const { addToCart } = useCart();
 
   const product = products.find((item) => item.id === productId);
   const [activeImage, setActiveImage] = useState(product?.images?.[0]);
@@ -99,14 +101,11 @@ function ProductDetails() {
   const savings = hasDiscount ? product.price - product.discountPrice : 0;
 
   function addSelectedProductToCart(redirect = false) {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: {
-        ...product,
-        selectedSize,
-        selectedColor,
-        quantity,
-      },
+    addToCart({
+      ...product,
+      selectedSize,
+      selectedColor,
+      quantity,
     });
 
     toast.success(`${product.name} added to cart`);

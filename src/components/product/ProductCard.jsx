@@ -3,20 +3,19 @@ import { FiHeart, FiShoppingBag, FiStar } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { useCart } from '../../context/CartContext.jsx';
 import { useStore } from '../../context/StoreContext.jsx';
 
 function ProductCard({ product, index = 0 }) {
   const { dispatch } = useStore();
+  const { addToCart } = useCart();
   const productImage = product.image || product.images?.[0];
   const productBadge = product.badge || product.tags?.[0] || 'Premium';
   const activePrice = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
 
   function handleAddToCart() {
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: { ...product, quantity: 1 },
-    });
+    addToCart({ ...product, quantity: 1 });
     toast.success(`${product.name} added to cart`);
   }
 

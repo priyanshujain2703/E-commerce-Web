@@ -7,6 +7,10 @@ import { useStore } from '../../context/StoreContext.jsx';
 
 function ProductCard({ product, index = 0 }) {
   const { dispatch } = useStore();
+  const productImage = product.image || product.images?.[0];
+  const productBadge = product.badge || product.tags?.[0] || 'Premium';
+  const activePrice = product.discountPrice || product.price;
+  const hasDiscount = product.discountPrice && product.discountPrice < product.price;
 
   function handleAddToCart() {
     dispatch({
@@ -31,12 +35,12 @@ function ProductCard({ product, index = 0 }) {
       <Link to={`/products/${product.id}`} className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-ink-100">
           <img
-            src={product.image}
+            src={productImage}
             alt={product.name}
             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
           />
           <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-ink-900 backdrop-blur">
-            {product.badge}
+            {productBadge}
           </div>
         </div>
       </Link>
@@ -47,7 +51,14 @@ function ProductCard({ product, index = 0 }) {
             <p className="text-sm font-medium text-ink-500">{product.category}</p>
             <h3 className="mt-1 text-lg font-bold text-ink-950">{product.name}</h3>
           </div>
-          <p className="text-lg font-bold text-ink-950">${product.price}</p>
+          <div className="text-right">
+            <p className="text-lg font-bold text-ink-950">${activePrice}</p>
+            {hasDiscount && (
+              <p className="text-sm font-semibold text-ink-400 line-through">
+                ${product.price}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="mt-4 flex items-center justify-between">

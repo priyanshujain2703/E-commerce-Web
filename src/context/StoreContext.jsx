@@ -6,6 +6,12 @@ const initialState = {
   cart: [],
   wishlist: [],
   user: null,
+  shopFilters: {
+    search: '',
+    category: 'All',
+    maxPrice: 300,
+    sortBy: 'newest',
+  },
 };
 
 function storeReducer(state, action) {
@@ -21,6 +27,19 @@ function storeReducer(state, action) {
       };
     case 'CLEAR_CART':
       return { ...state, cart: [] };
+    case 'SET_SHOP_FILTER':
+      return {
+        ...state,
+        shopFilters: {
+          ...state.shopFilters,
+          [action.payload.name]: action.payload.value,
+        },
+      };
+    case 'RESET_SHOP_FILTERS':
+      return {
+        ...state,
+        shopFilters: initialState.shopFilters,
+      };
     case 'TOGGLE_WISHLIST': {
       const exists = state.wishlist.some((item) => item.id === action.payload.id);
 

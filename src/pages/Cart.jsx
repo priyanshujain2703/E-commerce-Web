@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiShoppingBag, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import CartItem from '../components/cart/CartItem.jsx';
 import { useCart } from '../context/CartContext.jsx';
+import { showInfo } from '../utils/toast.js';
 
 function formatPrice(value) {
   return `$${value.toFixed(2)}`;
@@ -27,12 +27,12 @@ function Cart() {
 
   function handleRemove(key) {
     removeFromCart(key);
-    toast.info('Item removed from cart');
+    showInfo('Item removed from cart');
   }
 
   function handleClearCart() {
     clearCart();
-    toast.info('Cart cleared');
+    showInfo('Cart cleared');
   }
 
   if (cartItems.length === 0) {

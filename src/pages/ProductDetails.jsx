@@ -11,12 +11,12 @@ import {
   FiTruck,
 } from 'react-icons/fi';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import ProductCard from '../components/product/ProductCard.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import { useWishlist } from '../context/WishlistContext.jsx';
 import products from '../data/products.json';
+import { showInfo, showSuccess } from '../utils/toast.js';
 
 const reviews = [
   {
@@ -109,7 +109,7 @@ function ProductDetails() {
       quantity,
     });
 
-    toast.success(`${product.name} added to cart`);
+    showSuccess(`${product.name} added to cart`);
 
     if (redirect) {
       navigate('/checkout');
@@ -330,7 +330,7 @@ function ProductDetails() {
                 type="button"
                 onClick={() => {
                   toggleWishlist(product);
-                  toast.info(wished ? 'Removed from wishlist' : 'Added to wishlist');
+                  showInfo(wished ? 'Removed from wishlist' : 'Added to wishlist');
                 }}
                 className={[
                   'grid h-[50px] w-full place-items-center rounded-full border transition duration-200 hover:border-brass-500 hover:text-brass-700 sm:w-[50px]',

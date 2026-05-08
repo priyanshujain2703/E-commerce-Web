@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiCheck, FiMail, FiShoppingBag } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import SectionHeader from '../components/common/SectionHeader.jsx';
 import CategoryCard from '../components/home/CategoryCard.jsx';
@@ -14,6 +13,7 @@ import {
   testimonials,
   trendingProducts,
 } from '../data/homeData.js';
+import { showSuccess } from '../utils/toast.js';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,7 +23,7 @@ const fadeUp = {
 function Home() {
   function handleNewsletterSubmit(event) {
     event.preventDefault();
-    toast.success('You are on the early access list');
+    showSuccess('You are on the early access list');
     event.currentTarget.reset();
   }
 

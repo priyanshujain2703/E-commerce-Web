@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiHeart, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import WishlistItem from '../components/wishlist/WishlistItem.jsx';
 import { useCart } from '../context/CartContext.jsx';
 import { useWishlist } from '../context/WishlistContext.jsx';
+import { showInfo, showSuccess } from '../utils/toast.js';
 
 function Wishlist() {
   const { addToCart } = useCart();
@@ -14,17 +14,17 @@ function Wishlist() {
 
   function handleAddToCart(item) {
     addToCart({ ...item, quantity: 1 });
-    toast.success(`${item.name} added to cart`);
+    showSuccess(`${item.name} added to cart`);
   }
 
   function handleRemove(productId) {
     removeFromWishlist(productId);
-    toast.info('Removed from wishlist');
+    showInfo('Removed from wishlist');
   }
 
   function handleClearWishlist() {
     clearWishlist();
-    toast.info('Wishlist cleared');
+    showInfo('Wishlist cleared');
   }
 
   if (wishlistItems.length === 0) {

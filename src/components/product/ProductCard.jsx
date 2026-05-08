@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiStar } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useCart } from '../../context/CartContext.jsx';
 import { useWishlist } from '../../context/WishlistContext.jsx';
+import { showInfo, showSuccess } from '../../utils/toast.js';
 
 function ProductCard({ product, index = 0 }) {
   const { addToCart } = useCart();
@@ -17,12 +17,12 @@ function ProductCard({ product, index = 0 }) {
 
   function handleAddToCart() {
     addToCart({ ...product, quantity: 1 });
-    toast.success(`${product.name} added to cart`);
+    showSuccess(`${product.name} added to cart`);
   }
 
   function handleWishlist() {
     toggleWishlist(product);
-    toast.info(wished ? 'Removed from wishlist' : 'Added to wishlist');
+    showInfo(wished ? 'Removed from wishlist' : 'Added to wishlist');
   }
 
   return (

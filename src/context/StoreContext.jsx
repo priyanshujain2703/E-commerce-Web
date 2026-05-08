@@ -3,8 +3,8 @@ import { createContext, useContext, useMemo, useReducer } from 'react';
 const StoreContext = createContext(null);
 
 const initialState = {
-  cart: [],
   user: null,
+  authLoading: true,
   shopFilters: {
     search: '',
     category: 'All',
@@ -16,16 +16,7 @@ const initialState = {
 function storeReducer(state, action) {
   switch (action.type) {
     case 'SET_USER':
-      return { ...state, user: action.payload };
-    case 'ADD_TO_CART':
-      return { ...state, cart: [...state.cart, action.payload] };
-    case 'REMOVE_FROM_CART':
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
-      };
-    case 'CLEAR_CART':
-      return { ...state, cart: [] };
+      return { ...state, user: action.payload, authLoading: false };
     case 'SET_SHOP_FILTER':
       return {
         ...state,

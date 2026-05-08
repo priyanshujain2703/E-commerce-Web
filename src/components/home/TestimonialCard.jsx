@@ -15,7 +15,9 @@ function TestimonialCard({ testimonial, index = 0 }) {
           <FiStar key={starIndex} className="fill-current" size={15} />
         ))}
       </div>
-      <p className="mt-5 text-base leading-7 text-ink-700">"{testimonial.quote}"</p>
+      <p className="mt-5 text-base leading-7 text-ink-700">
+        &quot;{testimonial.quote}&quot;
+      </p>
       <div className="mt-6">
         <h3 className="font-bold text-ink-950">{testimonial.name}</h3>
         <p className="mt-1 text-sm font-medium text-ink-500">{testimonial.role}</p>

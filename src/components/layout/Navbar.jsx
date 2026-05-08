@@ -5,6 +5,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { useCart } from '../../context/CartContext.jsx';
 import { useStore } from '../../context/StoreContext.jsx';
+import { useWishlist } from '../../context/WishlistContext.jsx';
 import NavIconButton from '../ui/NavIconButton.jsx';
 
 const navLinks = [
@@ -19,8 +20,8 @@ function Navbar() {
   const { pathname, search } = useLocation();
   const { state } = useStore();
   const { itemCount } = useCart();
+  const { wishlistCount } = useWishlist();
 
-  const wishlistCount = state.wishlist.length;
   const profileLabel = state.user?.displayName || 'Login';
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function Navbar() {
           <NavIconButton
             label="Wishlist"
             icon={<FiHeart size={19} />}
-            to="/account"
+            to="/wishlist"
             count={wishlistCount}
           />
           <NavIconButton

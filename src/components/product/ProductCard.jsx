@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useCart } from '../../context/CartContext.jsx';
-import { useStore } from '../../context/StoreContext.jsx';
+import { useWishlist } from '../../context/WishlistContext.jsx';
 
 function ProductCard({ product, index = 0 }) {
-  const { dispatch } = useStore();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
   const productImage = product.image || product.images?.[0];
   const productBadge = product.badge || product.tags?.[0] || 'Premium';
   const activePrice = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
+  const wished = isWishlisted(product.id);
 
   function handleAddToCart() {
     addToCart({ ...product, quantity: 1 });
@@ -20,7 +21,8 @@ function ProductCard({ product, index = 0 }) {
   }
 
   function handleWishlist() {
-    dispatch({ type: 'TOGGLE_WISHLIST', payload: product });
+    toggleWishlist(product);
+    toast.info(wished ? 'Removed from wishlist' : 'Added to wishlist');
   }
 
   return (
@@ -69,10 +71,19 @@ function ProductCard({ product, index = 0 }) {
             <button
               type="button"
               onClick={handleWishlist}
-              className="grid h-10 w-10 place-items-center rounded-full border border-ink-200 text-ink-800 transition duration-200 hover:border-brass-500 hover:text-brass-700"
-              aria-label={`Add ${product.name} to wishlist`}
+              className={[
+                'grid h-10 w-10 place-items-center rounded-full border transition duration-200 hover:border-brass-500 hover:text-brass-700',
+                wished
+                  ? 'border-brass-500 bg-brass-100 text-brass-700'
+                  : 'border-ink-200 text-ink-800',
+              ].join(' ')}
+              aria-label={
+                wished
+                  ? `Remove ${product.name} from wishlist`
+                  : `Add ${product.name} to wishlist`
+              }
             >
-              <FiHeart size={18} />
+              <FiHeart className={wished ? 'fill-current' : ''} size={18} />
             </button>
             <button
               type="button"

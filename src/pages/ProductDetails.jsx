@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 import ProductCard from '../components/product/ProductCard.jsx';
 import { useCart } from '../context/CartContext.jsx';
-import { useStore } from '../context/StoreContext.jsx';
+import { useWishlist } from '../context/WishlistContext.jsx';
 import products from '../data/products.json';
 
 const reviews = [
@@ -45,8 +45,8 @@ const reviews = [
 function ProductDetails() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { dispatch } = useStore();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   const product = products.find((item) => item.id === productId);
   const [activeImage, setActiveImage] = useState(product?.images?.[0]);
@@ -99,6 +99,7 @@ function ProductDetails() {
   const activePrice = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
   const savings = hasDiscount ? product.price - product.discountPrice : 0;
+  const wished = isWishlisted(product.id);
 
   function addSelectedProductToCart(redirect = false) {
     addToCart({
@@ -327,11 +328,23 @@ function ProductDetails() {
               </button>
               <button
                 type="button"
-                onClick={() => dispatch({ type: 'TOGGLE_WISHLIST', payload: product })}
-                className="grid h-[50px] w-full place-items-center rounded-full border border-ink-200 text-ink-900 transition duration-200 hover:border-brass-500 hover:text-brass-700 sm:w-[50px]"
-                aria-label={`Add ${product.name} to wishlist`}
+                onClick={() => {
+                  toggleWishlist(product);
+                  toast.info(wished ? 'Removed from wishlist' : 'Added to wishlist');
+                }}
+                className={[
+                  'grid h-[50px] w-full place-items-center rounded-full border transition duration-200 hover:border-brass-500 hover:text-brass-700 sm:w-[50px]',
+                  wished
+                    ? 'border-brass-500 bg-brass-100 text-brass-700'
+                    : 'border-ink-200 text-ink-900',
+                ].join(' ')}
+                aria-label={
+                  wished
+                    ? `Remove ${product.name} from wishlist`
+                    : `Add ${product.name} to wishlist`
+                }
               >
-                <FiHeart size={19} />
+                <FiHeart className={wished ? 'fill-current' : ''} size={19} />
               </button>
             </div>
 

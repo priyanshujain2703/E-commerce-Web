@@ -8,6 +8,7 @@ const Cart = lazy(() => import('./pages/Cart.jsx'));
 const Checkout = lazy(() => import('./pages/Checkout.jsx'));
 const Login = lazy(() => import('./pages/Login.jsx'));
 const Account = lazy(() => import('./pages/Account.jsx'));
+const Wishlist = lazy(() => import('./pages/Wishlist.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 export const routes = [
@@ -38,6 +39,10 @@ export const routes = [
   {
     path: '/account',
     element: <Account />,
+  },
+  {
+    path: '/wishlist',
+    element: <Wishlist />,
   },
   {
     path: '/home',

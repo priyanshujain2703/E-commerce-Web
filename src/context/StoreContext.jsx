@@ -4,7 +4,6 @@ const StoreContext = createContext(null);
 
 const initialState = {
   cart: [],
-  wishlist: [],
   user: null,
   shopFilters: {
     search: '',
@@ -40,16 +39,6 @@ function storeReducer(state, action) {
         ...state,
         shopFilters: initialState.shopFilters,
       };
-    case 'TOGGLE_WISHLIST': {
-      const exists = state.wishlist.some((item) => item.id === action.payload.id);
-
-      return {
-        ...state,
-        wishlist: exists
-          ? state.wishlist.filter((item) => item.id !== action.payload.id)
-          : [...state.wishlist, action.payload],
-      };
-    }
     default:
       return state;
   }

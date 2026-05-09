@@ -1,1 +1,0 @@
-import{u as r,r as e}from"./index-DTIlec9a.js";import{s as u}from"./auth-BMX5cAlU.js";import{m as o}from"./authUser-CxyI1QjJ.js";function p(){const{dispatch:t}=r();return e.useEffect(()=>u(s=>{t({type:"SET_USER",payload:o(s)})}),[t]),null}export{p as default};

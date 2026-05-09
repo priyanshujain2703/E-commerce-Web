@@ -1,0 +1,1 @@
+import{O as s}from"./index-BX-VVAPK.js";const n={closeOnClick:!0,pauseOnHover:!0};function t(r,o={}){return s.success(r,{...n,...o})}function u(r,o={}){return s.error(r,{...n,...o})}function c(r,o={}){return s.info(r,{...n,...o})}export{c as a,u as b,t as s};
